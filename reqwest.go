@@ -70,7 +70,7 @@ const (
 var std = New()
 
 type (
-	// Client defines a client.
+	// Client defines a reqwest client.
 	Client struct {
 		httpClient *http.Client
 		method     string
@@ -136,7 +136,7 @@ func (d Data) Del(key string) {
 	delete(d, key)
 }
 
-// New constructors and returns a new client.
+// New constructors and returns a new reqwest client.
 func New() *Client {
 	c := &Client{
 		httpClient: &http.Client{},
@@ -168,7 +168,7 @@ func New() *Client {
 	return c
 }
 
-// WithTransport sets transport of the default client.
+// WithTransport sets transport of the default reqwest client.
 func WithTransport(transport http.RoundTripper) *Client {
 	return std.WithTransport(transport)
 }
@@ -179,7 +179,7 @@ func (c *Client) WithTransport(transport http.RoundTripper) *Client {
 	return c
 }
 
-// WithRedirectPolicy sets redirect policy of the default client.
+// WithRedirectPolicy sets redirect policy of the default reqwest client.
 func WithRedirectPolicy(policy func(req *http.Request, via []*http.Request) error) *Client {
 	return std.WithRedirectPolicy(policy)
 }
@@ -190,7 +190,7 @@ func (c *Client) WithRedirectPolicy(policy func(req *http.Request, via []*http.R
 	return c
 }
 
-// WithCookieJar sets cookie jar of the default client.
+// WithCookieJar sets cookie jar of the default reqwest client.
 func WithCookieJar(jar http.CookieJar) *Client {
 	return std.WithCookieJar(jar)
 }
@@ -201,7 +201,7 @@ func (c *Client) WithCookieJar(jar http.CookieJar) *Client {
 	return c
 }
 
-// WithTimeout sets timeout of the default client.
+// WithTimeout sets timeout of the default reqwest client.
 func WithTimeout(timeout time.Duration) *Client {
 	return std.WithTimeout(timeout)
 }
@@ -212,7 +212,7 @@ func (c *Client) WithTimeout(timeout time.Duration) *Client {
 	return c
 }
 
-// WithContext sets context of the default client.
+// WithContext sets context of the default reqwest client.
 func WithContext(ctx context.Context) *Client {
 	return std.WithContext(ctx)
 }
@@ -223,7 +223,7 @@ func (c *Client) WithContext(ctx context.Context) *Client {
 	return c
 }
 
-// WithProxy sets proxy of the default client from a url.
+// WithProxy sets proxy of the default reqwest client from a url.
 func WithProxy(url string) *Client {
 	return std.WithProxy(url)
 }
@@ -244,7 +244,7 @@ func (c *Client) WithProxy(url string) *Client {
 	return c
 }
 
-// WithClientCertificates appends client certificates of the default client.
+// WithClientCertificates appends client certificates of the default reqwest client.
 func WithClientCertificates(certs ...tls.Certificate) *Client {
 	return std.WithClientCertificates(certs...)
 }
@@ -263,7 +263,7 @@ func (c *Client) WithClientCertificates(certs ...tls.Certificate) *Client {
 	return c
 }
 
-// WithRootCAs appends root certificate authorities of the default client.
+// WithRootCAs appends root certificate authorities of the default reqwest client.
 func WithRootCAs(pemFilePath string) *Client {
 	return std.WithRootCAs(pemFilePath)
 }
@@ -290,7 +290,7 @@ func (c *Client) WithRootCAs(pemFilePath string) *Client {
 	return c
 }
 
-// DisableProxy lets the default client not use proxy.
+// DisableProxy lets the default reqwest client not use proxy.
 // reqwest uses proxy from environment by default.
 func DisableProxy() *Client {
 	return std.DisableProxy()
@@ -308,7 +308,7 @@ func (c *Client) DisableProxy() *Client {
 	return c
 }
 
-// DisableSession lets the default client not use cookie jar.
+// DisableSession lets the default reqwest client not use cookie jar.
 // Session is enabled by default, reqwest use cookie jar to manage cookie automatically.
 func DisableSession() *Client {
 	return std.DisableSession()
@@ -320,7 +320,7 @@ func (c *Client) DisableSession() *Client {
 	return c.WithCookieJar(nil)
 }
 
-// DisableRedirect lets the default client not redirect HTTP requests.
+// DisableRedirect lets the default reqwest client not redirect HTTP requests.
 // HTTP requests redirection is enabled by default.
 func DisableRedirect() *Client {
 	return std.DisableRedirect()
@@ -335,7 +335,7 @@ func (c *Client) DisableRedirect() *Client {
 	return c
 }
 
-// DisableKeepAlives disables HTTP keep-alives of the default client.
+// DisableKeepAlives disables HTTP keep-alives of the default reqwest client.
 // HTTP keep-alives is enabled by default.
 func DisableKeepAlives() *Client {
 	return std.DisableKeepAlives()
@@ -353,7 +353,7 @@ func (c *Client) DisableKeepAlives() *Client {
 	return c
 }
 
-// DisableVerify lets the default client not verify
+// DisableVerify lets the default reqwest client not verify
 // the server's TLS certificate.
 // TLS certificate verification is enabled by default.
 func DisableVerify() *Client {
@@ -375,7 +375,7 @@ func (c *Client) DisableVerify() *Client {
 	return c
 }
 
-// AcquireLock locks the default client.
+// AcquireLock locks the default reqwest client.
 // Use reqwest across goroutines you must call AcquireLock for each request in the beginning.
 // Necessary, otherwise might cause data race.
 func AcquireLock() *Client {
@@ -391,7 +391,7 @@ func (c *Client) AcquireLock() *Client {
 	return c
 }
 
-// Get uses the default client to make GET HTTP requests.
+// Get uses the default reqwest client to make GET HTTP requests.
 func Get(url string) *Client {
 	return std.Get(url)
 }
@@ -403,7 +403,7 @@ func (c *Client) Get(url string) *Client {
 	return c
 }
 
-// Head uses the default client to make HEAD HTTP requests.
+// Head uses the default reqwest client to make HEAD HTTP requests.
 func Head(url string) *Client {
 	return std.Head(url)
 }
@@ -415,7 +415,7 @@ func (c *Client) Head(url string) *Client {
 	return c
 }
 
-// Post uses the default client to make POST HTTP requests.
+// Post uses the default reqwest client to make POST HTTP requests.
 func Post(url string) *Client {
 	return std.Post(url)
 }
@@ -427,7 +427,7 @@ func (c *Client) Post(url string) *Client {
 	return c
 }
 
-// Put uses the default client to make PUT HTTP requests.
+// Put uses the default reqwest client to make PUT HTTP requests.
 func Put(url string) *Client {
 	return std.Put(url)
 }
@@ -439,7 +439,7 @@ func (c *Client) Put(url string) *Client {
 	return c
 }
 
-// Patch uses the default client to make PATCH HTTP requests.
+// Patch uses the default reqwest client to make PATCH HTTP requests.
 func Patch(url string) *Client {
 	return std.Patch(url)
 }
@@ -451,7 +451,7 @@ func (c *Client) Patch(url string) *Client {
 	return c
 }
 
-// Delete uses the default client to make DELETE HTTP requests.
+// Delete uses the default reqwest client to make DELETE HTTP requests.
 func Delete(url string) *Client {
 	return std.Delete(url)
 }
@@ -463,7 +463,7 @@ func (c *Client) Delete(url string) *Client {
 	return c
 }
 
-// Connect uses the default client to make CONNECT HTTP requests.
+// Connect uses the default reqwest client to make CONNECT HTTP requests.
 func Connect(url string) *Client {
 	return std.Connect(url)
 }
@@ -475,7 +475,7 @@ func (c *Client) Connect(url string) *Client {
 	return c
 }
 
-// Options uses the default client to make OPTIONS HTTP requests.
+// Options uses the default reqwest client to make OPTIONS HTTP requests.
 func Options(url string) *Client {
 	return std.Options(url)
 }
@@ -487,7 +487,7 @@ func (c *Client) Options(url string) *Client {
 	return c
 }
 
-// Trace uses the default client to make TRACE HTTP requests.
+// Trace uses the default reqwest client to make TRACE HTTP requests.
 func Trace(url string) *Client {
 	return std.Trace(url)
 }
@@ -499,7 +499,7 @@ func (c *Client) Trace(url string) *Client {
 	return c
 }
 
-// Reset resets state of the default client.
+// Reset resets state of the default reqwest client.
 func Reset() {
 	std.Reset()
 }
@@ -520,7 +520,7 @@ func (c *Client) Reset() {
 	}
 }
 
-// Params sets query params of the default client.
+// Params sets query params of the default reqwest client.
 func Params(params Value) *Client {
 	return std.Params(params)
 }
@@ -533,7 +533,7 @@ func (c *Client) Params(params Value) *Client {
 	return c
 }
 
-// Form sets form payload of the default client.
+// Form sets form payload of the default reqwest client.
 func Form(form Value) *Client {
 	return std.Form(form)
 }
@@ -547,7 +547,7 @@ func (c *Client) Form(form Value) *Client {
 	return c
 }
 
-// JSON sets JSON payload of the default client.
+// JSON sets JSON payload of the default reqwest client.
 func JSON(data Data) *Client {
 	return std.JSON(data)
 }
@@ -561,7 +561,7 @@ func (c *Client) JSON(data Data) *Client {
 	return c
 }
 
-// Files sets files payload of the default client.
+// Files sets files payload of the default reqwest client.
 func Files(files ...*File) *Client {
 	return std.Files(files...)
 }
@@ -572,7 +572,7 @@ func (c *Client) Files(files ...*File) *Client {
 	return c
 }
 
-// Headers sets headers of the default client.
+// Headers sets headers of the default reqwest client.
 func Headers(headers Value) *Client {
 	return std.Headers(headers)
 }
@@ -585,7 +585,7 @@ func (c *Client) Headers(headers Value) *Client {
 	return c
 }
 
-// Cookies sets cookies of the default client.
+// Cookies sets cookies of the default reqwest client.
 func Cookies(cookies ...*http.Cookie) *Client {
 	return std.Cookies(cookies...)
 }
@@ -596,7 +596,7 @@ func (c *Client) Cookies(cookies ...*http.Cookie) *Client {
 	return c
 }
 
-// BasicAuth sets basic authentication of the default client.
+// BasicAuth sets basic authentication of the default reqwest client.
 func BasicAuth(username, password string) *Client {
 	return std.BasicAuth(username, password)
 }
@@ -612,7 +612,7 @@ func basicAuth(username, password string) string {
 	return base64.StdEncoding.EncodeToString([]byte(auth))
 }
 
-// BearerToken sets bearer token of the default client.
+// BearerToken sets bearer token of the default reqwest client.
 func BearerToken(token string) *Client {
 	return std.BearerToken(token)
 }
@@ -623,7 +623,7 @@ func (c *Client) BearerToken(token string) *Client {
 	return c
 }
 
-// Send uses the default client to send the HTTP request and returns the response.
+// Send uses the default reqwest client to send the HTTP request and returns the response.
 func Send() *Response {
 	return std.Send()
 }
