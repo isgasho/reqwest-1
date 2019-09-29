@@ -11,10 +11,10 @@ A simple and user-friendly HTTP request library for Go.
 - Easy set basic authentication or bearer token.
 - Easy customize root certificate authorities and client certificates.
 - Easy set proxy.
-- Automatic cookie management.
+- Automatic cookies management.
 - Customize HTTP client, transport, redirect policy, cookie jar and timeout.
 - Easy set context.
-- Easy serialize responses into JSON.
+- Easy decode responses, raw data, text representation or  serialize it into JSON.
 - Concurrent safe.
 
 ## Install
@@ -240,6 +240,8 @@ fmt.Println(data)
 ```
 
 ### Concurrent Safe
+
+Use reqwest across goroutines you must call `AcquireLock` for each request in the beginning, otherwise might cause data race. **Don't forget it!**
 
 ```go
 const MaxWorker = 1000

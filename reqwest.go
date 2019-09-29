@@ -86,9 +86,12 @@ type (
 		ctx        context.Context
 	}
 
-	// Response wrap HTTP response and request error.
+	// Response wraps the original HTTP response and the potential error.
 	Response struct {
-		R   *http.Response
+		// R specifies the original HTTP response.
+		R *http.Response
+
+		// Err specifies the potential error.
 		Err error
 	}
 
@@ -100,13 +103,18 @@ type (
 
 	// File defines a multipart-data.
 	File struct {
-		FieldName string
-		FileName  string
-		FilePath  string
+		// FieldName specifies the field name of the file you want to upload.
+		FieldName string `json:"fieldname,omitempty"`
+
+		// FileName specifies the file name of the file you want to upload.
+		FileName string `json:"filename,omitempty"`
+
+		// FilePath specifies the file path of the file you want to upload.
+		FilePath string `json:"-"`
 	}
 )
 
-// Get gets the value from a map by the given key.
+// Get returns the value from a map by the given key.
 func (v Value) Get(key string) string {
 	return v[key]
 }
@@ -121,7 +129,7 @@ func (v Value) Del(key string) {
 	delete(v, key)
 }
 
-// Get gets the value from a map by the given key.
+// Get returns the value from a map by the given key.
 func (d Data) Get(key string) interface{} {
 	return d[key]
 }
@@ -134,6 +142,16 @@ func (d Data) Set(key string, value interface{}) {
 // Del deletes the value related to the given key from a map.
 func (d Data) Del(key string) {
 	delete(d, key)
+}
+
+// String returns the JSON text representation of a file.
+func (f *File) String() string {
+	b, err := json.Marshal(f)
+	if err != nil {
+		return "{}"
+	}
+
+	return string(b)
 }
 
 // New constructors and returns a new reqwest client.
@@ -309,13 +327,13 @@ func (c *Client) DisableProxy() *Client {
 }
 
 // DisableSession lets the default reqwest client not use cookie jar.
-// Session is enabled by default, reqwest use cookie jar to manage cookie automatically.
+// Session is enabled by default, reqwest use cookie jar to manage cookies automatically.
 func DisableSession() *Client {
 	return std.DisableSession()
 }
 
 // DisableSession lets c not use cookie jar.
-// Session is enabled by default, reqwest use cookie jar to manage cookie automatically.
+// Session is enabled by default, reqwest use cookie jar to manage cookies automatically.
 func (c *Client) DisableSession() *Client {
 	return c.WithCookieJar(nil)
 }
@@ -361,7 +379,7 @@ func DisableVerify() *Client {
 }
 
 // DisableVerify lets c not verify the server's TLS certificate.
-// TLS certificate verification enabled by default.
+// TLS certificate verification is enabled by default.
 func (c *Client) DisableVerify() *Client {
 	transport, ok := c.httpClient.Transport.(*http.Transport)
 	if !ok {
@@ -376,15 +394,15 @@ func (c *Client) DisableVerify() *Client {
 }
 
 // AcquireLock locks the default reqwest client.
-// Use reqwest across goroutines you must call AcquireLock for each request in the beginning.
-// Necessary, otherwise might cause data race.
+// Use reqwest across goroutines you must call AcquireLock for each request
+// in the beginning, otherwise might cause data race. Don't forget it!
 func AcquireLock() *Client {
 	return std.AcquireLock()
 }
 
 // AcquireLock locks c.
-// Use reqwest across goroutines you must call AcquireLock for each request in the beginning.
-// Necessary, otherwise might cause data race.
+// Use reqwest across goroutines you must call AcquireLock for each request
+// in the beginning, otherwise might cause data race. Don't forget it!
 func (c *Client) AcquireLock() *Client {
 	c.mux.Lock()
 	c.withLock = true
@@ -768,7 +786,7 @@ func (r *Response) Resolve() (*http.Response, error) {
 	return r.R, r.Err
 }
 
-// Raw reads the HTTP response of r and returns a []byte.
+// Raw decodes the HTTP response body of r and returns the raw data.
 func (r *Response) Raw() ([]byte, error) {
 	if r.Err != nil {
 		return nil, r.Err
@@ -783,7 +801,7 @@ func (r *Response) Raw() ([]byte, error) {
 	return b, nil
 }
 
-// Text reads the HTTP response of r and returns a string.
+// Text decodes the HTTP response body of r and returns the text representation of the raw data.
 func (r *Response) Text() (string, error) {
 	b, err := r.Raw()
 	if err != nil {
@@ -793,7 +811,7 @@ func (r *Response) Text() (string, error) {
 	return string(b), nil
 }
 
-// JSON reads the HTTP response of r and unmarshals it.
+// JSON decodes the HTTP response body of r and unmarshals it into v.
 func (r *Response) JSON(v interface{}) error {
 	b, err := r.Raw()
 	if err != nil {
