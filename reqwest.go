@@ -837,7 +837,7 @@ func (r *Response) EnsureStatus2xx(httpResp *http.Response) *Response {
 	if r.Err != nil {
 		return r
 	}
-	if r.R.StatusCode != http.StatusOK {
+	if r.R.StatusCode/100 != 2 {
 		r.Err = fmt.Errorf("status code 2xx expected but got: %d", r.R.StatusCode)
 	}
 	return r
