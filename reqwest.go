@@ -833,7 +833,7 @@ func (r *Response) EnsureStatusOk() *Response {
 }
 
 // EnsureStatus2xx ensures the HTTP response's status code of r must be 2xx.
-func (r *Response) EnsureStatus2xx(httpResp *http.Response) *Response {
+func (r *Response) EnsureStatus2xx() *Response {
 	if r.Err != nil {
 		return r
 	}
