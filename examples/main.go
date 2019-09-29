@@ -174,13 +174,14 @@ func customizeHTTPClient() {
 	})
 	timeout := 120 * time.Second
 
-	req := reqwest.
-		WithTransport(transport).
-		WithRedirectPolicy(redirectPolicy).
-		WithCookieJar(jar).
-		WithTimeout(timeout)
-
-	data, err := req.
+	httpClient := &http.Client{
+		Transport:     transport,
+		CheckRedirect: redirectPolicy,
+		Jar:           jar,
+		Timeout:       timeout,
+	}
+	data, err := reqwest.
+		WithHTTPClient(httpClient).
 		Get("http://httpbin.org/get").
 		Send().
 		Text()

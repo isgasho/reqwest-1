@@ -186,7 +186,20 @@ func New() *Client {
 	return c
 }
 
-// WithTransport sets transport of the default reqwest client.
+// WithHTTPClient changes HTTP client of the default reqwest client.
+func WithHTTPClient(httpClient *http.Client) *Client {
+	return std.WithClient(httpClient)
+}
+
+// WithClient sets HTTP client of c.
+func (c *Client) WithClient(httpClient *http.Client) *Client {
+	if httpClient != nil {
+		c.httpClient = httpClient
+	}
+	return c
+}
+
+// WithTransport changes transport of the default reqwest client.
 func WithTransport(transport http.RoundTripper) *Client {
 	return std.WithTransport(transport)
 }
@@ -197,18 +210,18 @@ func (c *Client) WithTransport(transport http.RoundTripper) *Client {
 	return c
 }
 
-// WithRedirectPolicy sets redirect policy of the default reqwest client.
+// WithRedirectPolicy changes redirection policy of the default reqwest client.
 func WithRedirectPolicy(policy func(req *http.Request, via []*http.Request) error) *Client {
 	return std.WithRedirectPolicy(policy)
 }
 
-// WithRedirectPolicy sets redirect policy of c.
+// WithRedirectPolicy sets redirection policy of c.
 func (c *Client) WithRedirectPolicy(policy func(req *http.Request, via []*http.Request) error) *Client {
 	c.httpClient.CheckRedirect = policy
 	return c
 }
 
-// WithCookieJar sets cookie jar of the default reqwest client.
+// WithCookieJar changes cookie jar of the default reqwest client.
 func WithCookieJar(jar http.CookieJar) *Client {
 	return std.WithCookieJar(jar)
 }
@@ -219,23 +232,23 @@ func (c *Client) WithCookieJar(jar http.CookieJar) *Client {
 	return c
 }
 
-// WithTimeout sets timeout of the default reqwest client.
+// WithTimeout changes timeout of the default reqwest client, zero means no timeout.
 func WithTimeout(timeout time.Duration) *Client {
 	return std.WithTimeout(timeout)
 }
 
-// WithTimeout sets timeout of c.
+// WithTimeout sets timeout of c, zero means no timeout.
 func (c *Client) WithTimeout(timeout time.Duration) *Client {
 	c.httpClient.Timeout = timeout
 	return c
 }
 
-// WithContext sets context of the default reqwest client.
+// WithContext sets HTTP requests context of the default reqwest client.
 func WithContext(ctx context.Context) *Client {
 	return std.WithContext(ctx)
 }
 
-// WithContext sets context of c.
+// WithContext sets HTTP requests context of c.
 func (c *Client) WithContext(ctx context.Context) *Client {
 	c.ctx = ctx
 	return c
