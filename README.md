@@ -14,7 +14,7 @@ A simple and user-friendly HTTP request library for Go.
 - Automatic cookies management.
 - Customize HTTP client, transport, redirect policy, cookie jar and timeout.
 - Easy set context.
-- Easy decode responses, raw data, text representation or  serialize it into JSON.
+- Easy decode responses, raw data, text representation and unmarshal the JSON-encoded data.
 - Concurrent safe.
 
 ## Install

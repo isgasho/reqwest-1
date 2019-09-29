@@ -95,7 +95,7 @@ type (
 		Err error
 	}
 
-	// Value is the same as map[string]string, used for params, headers, form-data, etc.
+	// Value is the same as map[string]string, used for params, headers, form, etc.
 	Value map[string]string
 
 	// Data is the same as map[string]interface{}, used for JSON payload.
@@ -641,12 +641,12 @@ func (c *Client) BearerToken(token string) *Client {
 	return c
 }
 
-// Send uses the default reqwest client to send the HTTP request and returns the response.
+// Send uses the default reqwest client to send the HTTP request and returns its response.
 func Send() *Response {
 	return std.Send()
 }
 
-// Send uses c to send the HTTP request and returns the response.
+// Send uses c to send the HTTP request and returns its response.
 func (c *Client) Send() *Response {
 	resp := new(Response)
 	if c.url == "" {
@@ -781,12 +781,12 @@ func (c *Client) addCookies(httpReq *http.Request) {
 	}
 }
 
-// Resolve resolves r and returns the original HTTP response.
+// Resolve resolves r and returns its original HTTP response.
 func (r *Response) Resolve() (*http.Response, error) {
 	return r.R, r.Err
 }
 
-// Raw decodes the HTTP response body of r and returns the raw data.
+// Raw decodes the HTTP response body of r and returns its raw data.
 func (r *Response) Raw() ([]byte, error) {
 	if r.Err != nil {
 		return nil, r.Err
@@ -801,7 +801,7 @@ func (r *Response) Raw() ([]byte, error) {
 	return b, nil
 }
 
-// Text decodes the HTTP response body of r and returns the text representation of the raw data.
+// Text decodes the HTTP response body of r and returns the text representation of its raw data.
 func (r *Response) Text() (string, error) {
 	b, err := r.Raw()
 	if err != nil {
@@ -811,7 +811,7 @@ func (r *Response) Text() (string, error) {
 	return string(b), nil
 }
 
-// JSON decodes the HTTP response body of r and unmarshals it into v.
+// JSON decodes the HTTP response body of r and unmarshals its JSON-encoded data into v.
 func (r *Response) JSON(v interface{}) error {
 	b, err := r.Raw()
 	if err != nil {
