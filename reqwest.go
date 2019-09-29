@@ -188,11 +188,11 @@ func New() *Client {
 
 // WithHTTPClient changes HTTP client of the default reqwest client.
 func WithHTTPClient(httpClient *http.Client) *Client {
-	return std.WithClient(httpClient)
+	return std.WithHTTPClient(httpClient)
 }
 
-// WithClient sets HTTP client of c.
-func (c *Client) WithClient(httpClient *http.Client) *Client {
+// WithHTTPClient sets HTTP client of c.
+func (c *Client) WithHTTPClient(httpClient *http.Client) *Client {
 	if httpClient != nil {
 		c.httpClient = httpClient
 	}
