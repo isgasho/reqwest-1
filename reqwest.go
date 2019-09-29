@@ -821,7 +821,7 @@ func (r *Response) JSON(v interface{}) error {
 	return json.Unmarshal(b, v)
 }
 
-// EnsureStatusOk ensures the HTTP response status code of r must be 200.
+// EnsureStatusOk ensures the HTTP response's status code of r must be 200.
 func (r *Response) EnsureStatusOk() *Response {
 	if r.Err != nil {
 		return r
@@ -832,7 +832,7 @@ func (r *Response) EnsureStatusOk() *Response {
 	return r
 }
 
-// EnsureStatus2xx ensures the HTTP response status code of r must be 2xx.
+// EnsureStatus2xx ensures the HTTP response's status code of r must be 2xx.
 func (r *Response) EnsureStatus2xx(httpResp *http.Response) *Response {
 	if r.Err != nil {
 		return r
