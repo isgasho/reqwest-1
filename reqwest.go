@@ -281,13 +281,13 @@ func (c *Client) WithClientCertificates(certs ...tls.Certificate) *Client {
 	return c
 }
 
-// WithRootCAs appends root certificate authorities of the default reqwest client.
-func WithRootCAs(pemFilePath string) *Client {
-	return std.WithRootCAs(pemFilePath)
+// WithRootCA appends root certificate authorities of the default reqwest client.
+func WithRootCA(pemFilePath string) *Client {
+	return std.WithRootCA(pemFilePath)
 }
 
-// WithRootCAs appends root certificate authorities of c.
-func (c *Client) WithRootCAs(pemFilePath string) *Client {
+// WithRootCA appends root certificate authorities of c.
+func (c *Client) WithRootCA(pemFilePath string) *Client {
 	pemCert, err := ioutil.ReadFile(pemFilePath)
 	if err != nil {
 		return c
