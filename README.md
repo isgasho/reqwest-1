@@ -1,7 +1,7 @@
 # reqwest
 A simple and user-friendly HTTP request library for Go.
 
-[![Build Status](https://travis-ci.org/winterssy/reqwest.svg?branch=master)](https://travis-ci.org/winterssy/reqwest) [![Go Report Card](https://goreportcard.com/badge/winterssy/reqwest)](https://goreportcard.com/report/winterssy/reqwest) [![GoDoc](https://godoc.org/github.com/winterssy/reqwest?status.svg)](https://godoc.org/github.com/winterssy/reqwest) [![License](https://img.shields.io/github/license/winterssy/reqwest.svg)](LICENSE)
+[![Build Status](https://travis-ci.org/winterssy/reqwest.svg?branch=master)](https://travis-ci.org/winterssy/reqwest) [![Go Report Card](https://goreportcard.com/badge/github.com/winterssy/reqwest)](https://goreportcard.com/report/github.com/winterssy/reqwest) [![GoDoc](https://godoc.org/github.com/winterssy/reqwest?status.svg)](https://godoc.org/github.com/winterssy/reqwest) [![License](https://img.shields.io/github/license/winterssy/reqwest.svg)](LICENSE)
 
 ## Features
 
