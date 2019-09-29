@@ -231,7 +231,7 @@ func TestBearerToken(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	if !data.Authenticated || data.Token != "grequests" {
+	if !data.Authenticated || data.Token != "reqwest" {
 		t.Error("Set bearer token failed")
 	}
 }
