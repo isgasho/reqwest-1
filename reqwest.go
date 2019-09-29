@@ -144,7 +144,7 @@ func (d Data) Del(key string) {
 	delete(d, key)
 }
 
-// String returns the JSON text representation of a file.
+// String returns the JSON-encoded text representation of a file.
 func (f *File) String() string {
 	b, err := json.Marshal(f)
 	if err != nil {
