@@ -78,6 +78,7 @@ type (
 		params     Value
 		form       Value
 		json       Data
+		host       string
 		headers    Value
 		cookies    []*http.Cookie
 		files      []*File
@@ -603,6 +604,17 @@ func (c *Client) Files(files ...*File) *Client {
 	return c
 }
 
+// Host specifies the host of the default reqwest client on which the URL is sought.
+func Host(host string) *Client {
+	return std.Host(host)
+}
+
+// Host specifies the host of c on which the URL is sought.
+func (c *Client) Host(host string) *Client {
+	c.host = host
+	return c
+}
+
 // Headers sets headers of the default reqwest client.
 func Headers(headers Value) *Client {
 	return std.Headers(headers)
@@ -703,6 +715,9 @@ func (c *Client) Send() *Response {
 	}
 	if len(c.cookies) != 0 {
 		c.addCookies(httpReq)
+	}
+	if c.host != "" {
+		httpReq.Host = c.host
 	}
 
 	c.Reset()

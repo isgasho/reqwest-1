@@ -224,7 +224,7 @@ func TestBearerToken(t *testing.T) {
 		Token         string `json:"token"`
 	}
 	err := reqwest.Get("http://httpbin.org/bearer").
-		BearerToken("grequests").
+		BearerToken("reqwest").
 		Send().
 		EnsureStatusOk().
 		JSON(&data)
